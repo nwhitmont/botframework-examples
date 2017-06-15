@@ -24,9 +24,7 @@ bot.dialog('/', [
         builder
             .Prompts
             .choice(session, "Choose", "m1|m2", {
-                retryPrompt: "invalid choice, please pick you choice",
-                listStyle: builder.ListStyle.button,
-                maxRetries: 2
+                listStyle: builder.ListStyle.button
             });
     },
     function (session, results) {

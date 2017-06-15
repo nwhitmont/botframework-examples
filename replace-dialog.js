@@ -21,19 +21,27 @@ var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
 bot.dialog('/',function(session) {
-     session.send('Hello');
+     session.send('Starting replaceDialog example...');
+     // set some value in dialogData
      session.dialogData.coupon = true;
      session.send('calling replaceDialog');
-     session.replaceDialog('order-pizza', session.dialogData);
+     // pass in dialogData to replaceDialog
+     session.replaceDialog('second-dialog', session.dialogData);
 });
 
-bot.dialog('order-pizza', function(session, args) {
-    session.send('Welcome to order-pizza dialog')
+bot.dialog('second-dialog', function(session, args) {
+    // what did we get from previous replaceDialog call?
+    console.log('\ngot args from replaceDialog:');
+    console.log(args);
+    session.send('Welcome to second-dialog');
     if(!args.coupon) {
-        session.endDialog('Your coupon was not recognized.')
+        // we didn't get the args from previous dialog
+        session.endDialog('args not present');
     }
     else {
-        session.endDialog('Coupon has been applied to your order!')
+        // args arrived OK from previous dialog
+        session.endDialog('args found OK');
     }
 })
+
 // END OF LINE
